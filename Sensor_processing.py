@@ -66,14 +66,13 @@ def GenerateErrData(SimulatedData, SensorErrorText="err"):
     No_of_clusters = 32
     No_of_sensors = 16
 
-    RandomClusterWithError = random.randint(0,
-                                            No_of_clusters)  # generate a random interger between 0 and 31 [32 clusters]
+    RandomClusterWithError = random.randint(0,No_of_clusters)  # generate a random interger between 0 and 31 [32 clusters]
     RandomSensorWithError = int(round(len(SimulatedData[0]) * (random.random())))  # convert string to an integer number
 
     if RandomClusterWithError > 1:  # If there is a cluster with an error
         index1 = 0
         while index1 < RandomClusterWithError:  # For all clusters with errors
-            if RandomClusterWithError > 1:  # if there is an error in cluster with unique error value - valid data range is 0-1
+            if RandomClusterWithError > 1:      # if there is an error in cluster with unique error value - valid data range is 0-1
                 index2 = 0
                 while index2 < RandomClusterWithError:
                     ErrorCluster = int(round(len(SimulatedData) * (random.random())))
@@ -91,7 +90,7 @@ def GenerateErrData(SimulatedData, SensorErrorText="err"):
                     index2 = index2 + 1  # move to next sensor
             else:
                 pass
-            index1 = index1 + 1  # move to next cluster
+            index1 = index1 + 4  # move to next cluster
 
     else:
         pass  # if there is no error in cluster do nothing
@@ -124,9 +123,8 @@ def logfileWithErrors(errorData, UniqueErrValue=2):
         while index2 < len(errorData[index1]):
             ErrorFile = list()
             if errorData[index1][index2] == UniqueErrValue:         # Find error sensor with a unique error value of 2
-                ErrorFile.append(errorData[index1][0])
-                ErrorFile.append(errorData[index1][1])
-                ErrorFile.append("Sensor {0}".format(index1 + 1))   # Store defective sensor
+                ErrorFile.append("Cluster {0}".format(index1 + 1))
+                ErrorFile.append("Sensor {0}".format(index2 + 1))   # Store defective sensor
                 f.write(str(ErrorFile))                             # Write defects to ErrorFile.txt
                 f.write('\n')
             else:
